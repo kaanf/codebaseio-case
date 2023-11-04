@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CodebaseIOCase</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_ad">İlan Ara</string>
+
+    <string name="room_count">Oda Sayısı</string>
+    <string name="building_age">Bina Yaşı</string>
+    <string name="gross_area">Brüt Alan</string>
+    <string name="net_area">Net Alan</string>
+    <string name="all_features">Tüm Özellikler</string>
+    <string name="review">İncele</string>
+    <string name="description">Açıklama</string>
+</resources>

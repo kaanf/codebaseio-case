@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_25">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imageCarouselRoot"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:cardBackgroundColor="@color/placeholder_background"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_10"
+            app:layout_constraintEnd_toEndOf="@id/imageCarouselRoot"
+            app:layout_constraintStart_toStartOf="@id/imageCarouselRoot"
+            app:layout_constraintTop_toBottomOf="@id/imageCarouselRoot" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/price"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            app:cardBackgroundColor="@color/placeholder_background"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="@id/spacer"
+            app:layout_constraintTop_toBottomOf="@id/spacer" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/date"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            app:cardBackgroundColor="@color/placeholder_background"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/price"
+            app:layout_constraintEnd_toEndOf="@id/spacer"
+            app:layout_constraintTop_toTopOf="@id/price" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/address"
+            android:layout_width="220dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="@color/placeholder_background"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="@id/price"
+            app:layout_constraintTop_toBottomOf="@id/price" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/room"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="@color/placeholder_background"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="@id/address"
+            app:layout_constraintTop_toBottomOf="@id/address" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

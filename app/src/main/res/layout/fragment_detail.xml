@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.kaanf.codebaseiocase.ui.detail.DetailViewModel" />
+
+        <variable
+            name="adViewModel"
+            type="com.kaanf.codebaseiocase.ui.AdViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Space
+            android:id="@+id/statusBarSpacer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.aemerse.slider.ImageCarousel
+            android:id="@+id/carousel"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showBottomShadow="false"
+            app:showIndicator="false"
+            app:showNavigationButtons="false"
+            app:showTopShadow="false" />
+
+        <ImageView
+            android:id="@+id/arrowBack"
+            android:layout_width="@dimen/size_35"
+            android:layout_height="@dimen/size_35"
+            android:layout_marginStart="@dimen/margin_10"
+            android:background="@drawable/bg_back_arrow"
+            android:contentDescription="@null"
+            android:onClick="@{() -> viewModel.onBackArrowClicked()}"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
+
+        <ImageView
+            android:id="@+id/share"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="@dimen/margin_10"
+            android:contentDescription="@null"
+            android:padding="5dp"
+            android:src="@drawable/ic_share"
+            app:layout_constraintBottom_toBottomOf="@id/arrowBack"
+            app:layout_constraintEnd_toStartOf="@id/favorite"
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
+
+        <ImageView
+            android:id="@+id/favorite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="@dimen/margin_10"
+            android:contentDescription="@null"
+            android:padding="5dp"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toBottomOf="@id/arrowBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@drawable/bg_ad_picture_count"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/padding_10"
+            android:paddingVertical="5dp"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_picture" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:fontFamily="@font/inter_regular"
+                android:text="@{adViewModel.carouselImageCount}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_14"
+                tools:text="1/20" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/adDescriptionRoot"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline">
+
+            <Space
+                android:id="@+id/firstSpacer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_30"
+                android:layout_marginHorizontal="@dimen/margin_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@{adViewModel.category}"
+                android:textColor="@color/category_color"
+                android:textSize="@dimen/font_16"
+                app:layout_constraintStart_toStartOf="@id/firstSpacer"
+                app:layout_constraintTop_toBottomOf="@id/firstSpacer"
+                tools:text="Satılık Konut (Villa)" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_10"
+                android:fontFamily="@font/inter_regular"
+                android:text="@{adViewModel.date}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_12"
+                app:layout_constraintBottom_toBottomOf="@id/category"
+                app:layout_constraintEnd_toEndOf="@id/firstSpacer"
+                app:layout_constraintTop_toTopOf="@id/category"
+                tools:text="29.04.2021" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@{adViewModel.price}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_20"
+                app:layout_constraintStart_toStartOf="@id/category"
+                app:layout_constraintTop_toBottomOf="@id/category"
+                tools:text="4.500.000TL" />
+
+            <TextView
+                android:id="@+id/roomCountTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/room_count"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintEnd_toStartOf="@id/buildingAgeTitle"
+                app:layout_constraintStart_toStartOf="@id/category"
+                app:layout_constraintTop_toBottomOf="@id/price" />
+
+            <TextView
+                android:id="@+id/roomCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="@{adViewModel.roomCountInDetail}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@id/category"
+                app:layout_constraintTop_toBottomOf="@id/roomCountTitle"
+                tools:text="5+2" />
+
+            <TextView
+                android:id="@+id/buildingAgeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/building_age"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintBottom_toBottomOf="@id/roomCountTitle"
+                app:layout_constraintEnd_toStartOf="@id/grossAreaTitle"
+                app:layout_constraintStart_toEndOf="@id/roomCountTitle"
+                app:layout_constraintTop_toTopOf="@id/roomCountTitle" />
+
+            <TextView
+                android:id="@+id/buildingAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="@{adViewModel.adObservable.buildingAge}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@id/buildingAgeTitle"
+                app:layout_constraintTop_toBottomOf="@id/buildingAgeTitle"
+                tools:text="Sıfır" />
+
+            <TextView
+                android:id="@+id/grossAreaTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/gross_area"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintBottom_toBottomOf="@id/buildingAgeTitle"
+                app:layout_constraintEnd_toStartOf="@id/netAreaTitle"
+                app:layout_constraintStart_toEndOf="@id/buildingAgeTitle"
+                app:layout_constraintTop_toTopOf="@id/buildingAgeTitle" />
+
+            <TextView
+                android:id="@+id/grossArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="@{adViewModel.grossAreaInDetail}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@id/grossAreaTitle"
+                app:layout_constraintTop_toBottomOf="@id/grossAreaTitle"
+                tools:text="500 m2" />
+
+            <TextView
+                android:id="@+id/netAreaTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/net_area"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintBottom_toBottomOf="@id/grossAreaTitle"
+                app:layout_constraintEnd_toEndOf="@id/firstSpacer"
+                app:layout_constraintStart_toEndOf="@id/grossAreaTitle"
+                app:layout_constraintTop_toTopOf="@id/grossAreaTitle" />
+
+            <TextView
+                android:id="@+id/netArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="@{adViewModel.netAreaInDetail}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@id/netAreaTitle"
+                app:layout_constraintTop_toBottomOf="@id/netAreaTitle"
+                tools:text="400 m2" />
+
+            <Space
+                android:id="@+id/secondSpacer"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_30"
+                app:layout_constraintEnd_toEndOf="@id/firstSpacer"
+                app:layout_constraintStart_toStartOf="@id/firstSpacer"
+                app:layout_constraintTop_toBottomOf="@id/roomCount" />
+
+            <ImageView
+                android:id="@+id/allFeaturesIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_all_features"
+                app:layout_constraintStart_toStartOf="@id/secondSpacer"
+                app:layout_constraintTop_toBottomOf="@id/secondSpacer" />
+
+            <TextView
+                android:id="@+id/allFeaturesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15"
+                android:fontFamily="@font/inter_bold"
+                android:text="@string/all_features"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintBottom_toBottomOf="@id/allFeaturesIcon"
+                app:layout_constraintStart_toEndOf="@id/allFeaturesIcon"
+                app:layout_constraintTop_toTopOf="@id/allFeaturesIcon" />
+
+            <TextView
+                android:id="@+id/reviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/review"
+                android:textColor="@color/category_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintBottom_toBottomOf="@id/reviewIcon"
+                app:layout_constraintEnd_toStartOf="@id/reviewIcon"
+                app:layout_constraintTop_toTopOf="@id/reviewIcon" />
+
+            <ImageView
+                android:id="@+id/reviewIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_chevron_right_24"
+                app:layout_constraintBottom_toBottomOf="@id/allFeaturesIcon"
+                app:layout_constraintEnd_toEndOf="@id/secondSpacer"
+                app:layout_constraintTop_toTopOf="@id/allFeaturesIcon" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@color/search_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/allFeaturesIcon" />
+
+            <Space
+                android:id="@+id/thirdSpacer"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_20"
+                app:layout_constraintEnd_toEndOf="@id/secondSpacer"
+                app:layout_constraintStart_toStartOf="@id/secondSpacer"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <TextView
+                android:id="@+id/descriptionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="@string/description"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_18"
+                app:layout_constraintStart_toStartOf="@id/thirdSpacer"
+                app:layout_constraintTop_toBottomOf="@id/thirdSpacer" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:fontFamily="@font/inter_regular"
+                android:text="@{adViewModel.description}"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_14"
+                app:layout_constraintStart_toStartOf="@id/descriptionTitle"
+                app:layout_constraintTop_toBottomOf="@id/descriptionTitle"
+                tools:text="Lorem Ipsum" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_begin="270dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
