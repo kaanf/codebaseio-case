@@ -1,4 +1,4 @@
-package com.kaanf.codebaseiocase.ui
+package com.kaanf.codebaseiocase.ui.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,17 +8,17 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.aemerse.slider.model.CarouselItem
 import com.kaanf.codebaseiocase.databinding.ItemListBinding
+import com.kaanf.codebaseiocase.ui.home.item.AdViewModel
 import java.util.Locale
+import javax.inject.Inject
 
-class AdsAdapter(private val adViewModels: List<AdViewModel>) : RecyclerView.Adapter<AdsAdapter.AdsViewHolder>(), Filterable {
-    private var adSearchResults: List<AdViewModel> = listOf()
+class AdsAdapter @Inject constructor() : RecyclerView.Adapter<AdsAdapter.AdsViewHolder>(), Filterable {
+    private var adSearchResults: MutableList<AdViewModel> = mutableListOf()
+    private var adViewModels: List<AdViewModel> = listOf()
 
-    init {
-        adSearchResults = adViewModels
-    }
-
-    fun add() {
-
+    fun add(adViewModels: List<AdViewModel>) {
+        this@AdsAdapter.adViewModels = adViewModels
+        adSearchResults = adViewModels.toMutableList()
     }
 
     inner class AdsViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -59,7 +59,7 @@ class AdsAdapter(private val adViewModels: List<AdViewModel>) : RecyclerView.Ada
                     adViewModels.toList()
                 else
                     adViewModels.filter {
-                        it.ad.category.toLowerCase(Locale.ROOT).contains(searchQuery.toLowerCase(Locale.ROOT))
+                        it.ad.category.lowercase(Locale.ROOT).contains(searchQuery.lowercase(Locale.ROOT))
                     }
 
                 val searchResults = FilterResults()

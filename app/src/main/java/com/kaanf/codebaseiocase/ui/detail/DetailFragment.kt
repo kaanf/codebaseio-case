@@ -1,7 +1,6 @@
 package com.kaanf.codebaseiocase.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +11,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.aemerse.slider.listener.CarouselOnScrollListener
 import com.aemerse.slider.model.CarouselItem
-import com.kaanf.codebaseiocase.R
 import com.kaanf.codebaseiocase.databinding.FragmentDetailBinding
-import com.kaanf.codebaseiocase.databinding.FragmentHomeBinding
-import com.kaanf.codebaseiocase.ui.AdsAdapter
 import com.kaanf.codebaseiocase.ui.MainActivity
-import com.kaanf.codebaseiocase.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,38 +34,36 @@ class DetailFragment : Fragment(), DetailViewModel.Navigator {
 
         args.adViewModel?.let { adViewModel ->
             binding?.adViewModel = adViewModel
+
+            adViewModel.resetImagePosition()
         }
-
-        return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding?.statusBarSpacer?.layoutParams?.let {
             it.height = (activity as MainActivity).statusBarHeight
         }
 
         setCarousel()
+
+        return binding?.root
     }
 
     private fun setCarousel() {
         args.adViewModel?.let { adViewModel ->
-            binding.apply {
-                this?.carousel?.registerLifecycle(viewLifecycleOwner.lifecycle)
+            binding?.apply {
+                carousel.registerLifecycle(viewLifecycleOwner.lifecycle)
 
-                val list = mutableListOf<CarouselItem>()
+                val carouselItems = mutableListOf<CarouselItem>()
 
                 adViewModel.images.forEach {
-                    list.add(CarouselItem(imageUrl = it))
+                    carouselItems.add(CarouselItem(imageUrl = it))
                 }
 
-                this?.carousel?.setData(list)
+                carousel.setData(carouselItems)
 
                 var currentPosition = 0
                 var currentCarouselItem = CarouselItem()
 
-                this?.carousel?.onScrollListener = object : CarouselOnScrollListener {
+                carousel.onScrollListener = object : CarouselOnScrollListener {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int, position: Int, carouselItem: CarouselItem?) {
                         super.onScrollStateChanged(recyclerView, newState, position, carouselItem)
                         if (newState == 0)
@@ -81,7 +74,6 @@ class DetailFragment : Fragment(), DetailViewModel.Navigator {
                         currentCarouselItem = carouselItem ?: CarouselItem()
                     }
                 }
-
             }
         }
     }

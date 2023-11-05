@@ -1,4 +1,4 @@
-package com.kaanf.codebaseiocase.ui
+package com.kaanf.codebaseiocase.ui.home.item
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
@@ -74,12 +74,17 @@ class AdViewModel(private val listener: Listener, val ad: Ad) : ViewModel(), Ser
         setCarouselImageCountText(currentImagePosition)
     }
 
-    fun onAdClicked() {
-        listener.onAdClicked(ad = ad)
+    fun resetImagePosition() {
+        currentImagePosition = 0
     }
 
     private fun setCarouselImageCountText(currentImagePosition: Int) {
         carouselImageCount.set("$currentImagePosition/${images.size}")
+    }
+
+
+    fun onAdClicked() {
+        listener.onAdClicked(ad = ad)
     }
 
 

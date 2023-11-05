@@ -5,7 +5,6 @@ import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -25,14 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kaanf.codebaseiocase.R
 import com.kaanf.codebaseiocase.data.model.AdList
 import com.kaanf.codebaseiocase.databinding.FragmentHomeBinding
-import com.kaanf.codebaseiocase.ui.AdViewModel
-import com.kaanf.codebaseiocase.ui.AdsAdapter
+import com.kaanf.codebaseiocase.ui.home.item.AdViewModel
 import com.kaanf.codebaseiocase.ui.MainActivity
-import com.kaanf.codebaseiocase.ui.SimpleDividerItemDecoration
 import com.kaanf.codebaseiocase.utils.IOStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), HomeViewModel.Navigator {
@@ -40,13 +38,19 @@ class HomeFragment : Fragment(), HomeViewModel.Navigator {
 
     private var binding: FragmentHomeBinding? = null
 
-    private lateinit var adsAdapter: AdsAdapter
+    @Inject
+    lateinit var adsAdapter: AdsAdapter
 
-    private var isFirstInitialized = true
+    @Inject
+    lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
+
+        context?.let {
+            linearLayoutManager = LinearLayoutManager(context)
+        }
 
         lifecycleScope.launch {
             withStarted {
@@ -70,10 +74,7 @@ class HomeFragment : Fragment(), HomeViewModel.Navigator {
         viewModel.ads.observe(viewLifecycleOwner) { ioStatus ->
             when (ioStatus) {
                 is IOStatus.Success -> {
-                    if (isFirstInitialized) {
-                        isFirstInitialized = false
-                        init(ioStatus.data)
-                    }
+                    init(ioStatus.data)
                 }
 
                 is IOStatus.Failure -> {
@@ -97,75 +98,80 @@ class HomeFragment : Fragment(), HomeViewModel.Navigator {
     }
 
     private fun setUI() {
-        binding?.search?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {}
+        binding?.apply {
+            search.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {}
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(query: CharSequence, start: Int, before: Int, count: Int) {
-                viewModel.setClearIconVisibility(query.isNotEmpty())
-                viewModel.updateSearchQuery(query.toString())
+                override fun onTextChanged(query: CharSequence, start: Int, before: Int, count: Int) {
+                    this@HomeFragment.viewModel.setClearIconVisibility(query.isNotEmpty())
+                    this@HomeFragment.viewModel.updateSearchQuery(query.toString())
 
-                adsAdapter.filter.filter(query)
-            }
-        })
+                    adsAdapter.filter.filter(query)
+                }
+            })
 
-        binding?.search?.setOnFocusChangeListener { view, isFocused ->
-            context?.let { context ->
-                val searchDrawableFocused = getDrawable(context, R.drawable.bg_search_focused)
-                val searchDrawableNormal = getDrawable(context, R.drawable.bg_search)
+            search.setOnFocusChangeListener { _, isFocused ->
+                context?.let { context ->
+                    val searchDrawableFocused = getDrawable(context, R.drawable.bg_search_focused)
+                    val searchDrawableNormal = getDrawable(context, R.drawable.bg_search)
 
-                val duration = 200
+                    val duration = 200
 
-                val newBackground = if (isFocused) searchDrawableFocused else searchDrawableNormal
-                val currentBackground = binding?.searchRoot?.background
+                    val newBackground = if (isFocused) searchDrawableFocused else searchDrawableNormal
+                    val currentBackground = searchRoot.background
 
-                if (currentBackground is TransitionDrawable)
-                    currentBackground.reverseTransition(duration)
-                else {
-                    val transition = TransitionDrawable(arrayOf(currentBackground, newBackground))
+                    if (currentBackground is TransitionDrawable)
+                        currentBackground.reverseTransition(duration)
+                    else {
+                        val transition = TransitionDrawable(arrayOf(currentBackground, newBackground))
 
-                    binding?.searchRoot?.background = transition
-                    transition.startTransition(duration)
+                        searchRoot.background = transition
+                        transition.startTransition(duration)
+                    }
                 }
             }
-        }
 
-        binding?.search?.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(view: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    val inputMethodManager: InputMethodManager = view?.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            search.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+                override fun onEditorAction(view: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        val inputMethodManager: InputMethodManager = view?.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 
-                    binding?.search?.clearFocus()
+                        search.clearFocus()
 
-                    return true
+                        return true
+                    }
+
+                    return false
                 }
+            })
 
-                return false
+            statusBarSpacer.layoutParams?.let {
+                it.height = (activity as MainActivity).statusBarHeight
             }
-        })
 
-        binding?.statusBarSpacer?.layoutParams?.let {
-            it.height = (activity as MainActivity).statusBarHeight
+            ads.setPadding(0, 0, 0, (activity as MainActivity).navigationBarHeight)
+
+            if (ads.layoutManager == null)
+                ads.layoutManager = linearLayoutManager
         }
-
-        binding?.ads?.setPadding(0, 0, 0, (activity as MainActivity).navigationBarHeight)
     }
 
     private fun init(ads: AdList) {
-        val layoutManager = LinearLayoutManager(context)
-
-        adsAdapter = AdsAdapter(viewModel.getViewModels(ads))
-
-        Log.i("App.tag", "init: called.")
+        adsAdapter.add(
+            viewModel.adViewModels.ifEmpty {
+                viewModel.getViewModels(ads)
+            }
+        )
 
         binding?.ads?.apply {
-            this@apply.layoutManager = layoutManager
             adapter = adsAdapter
 
             getDrawable(context, R.drawable.divider)?.let { divider ->
-                val itemDecoration = SimpleDividerItemDecoration(this.context, R.drawable.divider)
+                val itemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+                itemDecoration.setDrawable(divider)
                 addItemDecoration(itemDecoration)
             }
         }

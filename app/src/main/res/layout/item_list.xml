@@ -10,7 +10,7 @@
 
         <variable
             name="adViewModel"
-            type="com.kaanf.codebaseiocase.ui.AdViewModel" />
+            type="com.kaanf.codebaseiocase.ui.home.item.AdViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
 
         <RelativeLayout
             android:id="@+id/imageCarouselRoot"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_0"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,10 +29,10 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/size_200"
                 android:layout_centerInParent="true"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="0dp">
+                app:cardCornerRadius="@dimen/size_15"
+                app:cardElevation="@dimen/size_0">
 
                 <com.aemerse.slider.ImageCarousel
                     android:id="@+id/carousel"
@@ -62,7 +62,7 @@
 
         <Space
             android:id="@+id/spacer"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_0"
             android:layout_height="@dimen/size_10"
             app:layout_constraintEnd_toEndOf="@id/imageCarouselRoot"
             app:layout_constraintStart_toStartOf="@id/imageCarouselRoot"
@@ -109,7 +109,7 @@
             android:id="@+id/room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/margin_5"
             android:fontFamily="@font/inter_bold"
             android:text="@{adViewModel.roomCount}"
             android:textColor="@color/primary_color"

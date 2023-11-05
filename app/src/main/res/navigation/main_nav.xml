@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="adViewModel"
-            app:argType="com.kaanf.codebaseiocase.ui.AdViewModel"
+            app:argType="com.kaanf.codebaseiocase.ui.home.item.AdViewModel"
             app:nullable="true" />
     </fragment>
 </navigation>

@@ -12,7 +12,7 @@
 
         <variable
             name="adViewModel"
-            type="com.kaanf.codebaseiocase.ui.AdViewModel" />
+            type="com.kaanf.codebaseiocase.ui.home.item.AdViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
 
         <Space
             android:id="@+id/statusBarSpacer"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_0"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +29,8 @@
 
         <com.aemerse.slider.ImageCarousel
             android:id="@+id/carousel"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_width="@dimen/size_0"
+            android:layout_height="@dimen/size_300"
             android:layout_centerInParent="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,40 +42,41 @@
 
         <ImageView
             android:id="@+id/arrowBack"
-            android:layout_width="@dimen/size_35"
-            android:layout_height="@dimen/size_35"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_45"
             android:layout_marginStart="@dimen/margin_10"
             android:background="@drawable/bg_back_arrow"
             android:contentDescription="@null"
             android:onClick="@{() -> viewModel.onBackArrowClicked()}"
-            android:padding="10dp"
+            android:padding="@dimen/padding_14"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
 
         <ImageView
             android:id="@+id/share"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginHorizontal="@dimen/margin_10"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_45"
             android:contentDescription="@null"
-            android:padding="5dp"
+            android:padding="@dimen/padding_14"
             android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="@id/arrowBack"
             app:layout_constraintEnd_toStartOf="@id/favorite"
-            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer"
+            app:tint="@color/black" />
 
         <ImageView
             android:id="@+id/favorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_45"
             android:layout_marginHorizontal="@dimen/margin_10"
             android:contentDescription="@null"
-            android:padding="5dp"
+            android:padding="@dimen/padding_14"
             android:src="@drawable/ic_heart"
             app:layout_constraintBottom_toBottomOf="@id/arrowBack"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer"
+            app:tint="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -84,8 +85,8 @@
             android:background="@drawable/bg_ad_picture_count"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/padding_10"
-            android:paddingVertical="5dp"
+            android:paddingHorizontal="@dimen/padding_12"
+            android:paddingVertical="@dimen/padding_2"
             app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -109,8 +110,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/adDescriptionRoot"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/size_0"
+            android:layout_height="@dimen/size_0"
             android:background="@drawable/bg_list"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -155,7 +156,7 @@
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/margin_5"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@{adViewModel.price}"
                 android:textColor="@color/primary_color"
@@ -166,7 +167,7 @@
 
             <TextView
                 android:id="@+id/roomCountTitle"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
                 android:fontFamily="@font/inter_regular"
@@ -191,7 +192,7 @@
 
             <TextView
                 android:id="@+id/buildingAgeTitle"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/building_age"
@@ -216,7 +217,7 @@
 
             <TextView
                 android:id="@+id/grossAreaTitle"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/gross_area"
@@ -266,7 +267,7 @@
 
             <Space
                 android:id="@+id/secondSpacer"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0"
                 android:layout_height="@dimen/size_30"
                 app:layout_constraintEnd_toEndOf="@id/firstSpacer"
                 app:layout_constraintStart_toStartOf="@id/firstSpacer"
@@ -318,8 +319,8 @@
 
             <View
                 android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_2"
                 android:layout_marginTop="@dimen/margin_15"
                 android:background="@color/search_background"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -328,7 +329,7 @@
 
             <Space
                 android:id="@+id/thirdSpacer"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_0"
                 android:layout_height="@dimen/size_20"
                 app:layout_constraintEnd_toEndOf="@id/secondSpacer"
                 app:layout_constraintStart_toStartOf="@id/secondSpacer"
@@ -362,7 +363,7 @@
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_0"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"

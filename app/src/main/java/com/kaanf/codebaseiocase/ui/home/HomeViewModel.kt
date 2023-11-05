@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.kaanf.codebaseiocase.data.model.Ad
 import com.kaanf.codebaseiocase.data.model.AdList
 import com.kaanf.codebaseiocase.domain.usecase.GetAdsUseCase
-import com.kaanf.codebaseiocase.ui.AdViewModel
+import com.kaanf.codebaseiocase.ui.home.item.AdViewModel
 import com.kaanf.codebaseiocase.utils.IOStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
     val ads: LiveData<IOStatus<AdList>>
         get() = _ads
 
-    private var adViewModels: MutableList<AdViewModel> = mutableListOf()
+    var adViewModels: MutableList<AdViewModel> = mutableListOf()
 
     fun fetch() {
         getAds()
