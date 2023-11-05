@@ -68,14 +68,17 @@ class DetailFragment : Fragment(), DetailViewModel.Navigator {
                 this?.carousel?.setData(list)
 
                 var currentPosition = 0
+                var currentCarouselItem = CarouselItem()
 
                 this?.carousel?.onScrollListener = object : CarouselOnScrollListener {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int, position: Int, carouselItem: CarouselItem?) {
                         super.onScrollStateChanged(recyclerView, newState, position, carouselItem)
                         if (newState == 0)
-                            adViewModel.onImageScrolled(if (currentPosition < position || currentPosition == 0) 1 else -1)
+                            if (currentCarouselItem != carouselItem)
+                                adViewModel.onImageScrolled(if (currentPosition < position || currentPosition == 0) 1 else -1)
 
                         currentPosition = position
+                        currentCarouselItem = carouselItem ?: CarouselItem()
                     }
                 }
 

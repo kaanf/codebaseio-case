@@ -17,6 +17,10 @@ class AdsAdapter(private val adViewModels: List<AdViewModel>) : RecyclerView.Ada
         adSearchResults = adViewModels
     }
 
+    fun add() {
+
+    }
+
     inner class AdsViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(position: Int) {
             val adViewModel = adSearchResults[position]
@@ -73,4 +77,3 @@ class AdsAdapter(private val adViewModels: List<AdViewModel>) : RecyclerView.Ada
         }
     }
 }
-

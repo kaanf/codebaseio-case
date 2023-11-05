@@ -8,5 +8,6 @@
     <color name="primary_color">#002B49</color>
     <color name="category_color">#0067A0</color>
     <color name="search_background">#F8F9FA</color>
+    <color name="search_background_unfocused">#CCF8F9FA</color>
     <color name="placeholder_background">#DCDCDC</color>
 </resources>

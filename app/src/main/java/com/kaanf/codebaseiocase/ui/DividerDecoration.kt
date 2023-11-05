@@ -1,27 +1,31 @@
 package com.kaanf.codebaseiocase.ui
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
+import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kaanf.codebaseiocase.R
 
-class DividerDecoration(private val dividerColor: Int) : RecyclerView.ItemDecoration() {
-    private val dividerPaint = Paint().apply {
-        color = dividerColor
-        strokeWidth = 2f
-    }
+class SimpleDividerItemDecoration(context: Context, @DrawableRes dividerRes: Int) : RecyclerView.ItemDecoration() {
 
-    override fun onDraw(canvas: Canvas, recyclerView: RecyclerView, state: RecyclerView.State) {
-        super.onDraw(canvas, recyclerView, state)
+    private val divider: Drawable = ContextCompat.getDrawable(context, R.drawable.divider)!! // Divider'ınızın drawable kaynağı
 
-        for (i in 0 until recyclerView.childCount) {
-            val child = recyclerView.getChildAt(i)
-            val left = child.left + recyclerView.left
-            val right = child.right + recyclerView.right
-            val top = child.top + recyclerView.top
-            val bottom = child.bottom + recyclerView.bottom
+    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+        // Divider'ları yuvarlatılmış köşelerin içinde kesmeye çalışın.
+        for (i in 0 until parent.childCount) {
+            val child = parent.getChildAt(i)
+            val params = child.layoutParams as RecyclerView.LayoutParams
+            val left = child.left + params.leftMargin
+            val right = child.right - params.rightMargin
+            val top = child.bottom + params.bottomMargin
+            val bottom = top + divider.intrinsicHeight
 
-            canvas.drawLine(left.toFloat(), bottom.toFloat(), right.toFloat(), bottom.toFloat(), dividerPaint)
+            divider.setBounds(left, top, right, bottom)
+            divider.draw(c)
         }
     }
 }

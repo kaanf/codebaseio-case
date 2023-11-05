@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -65,14 +66,27 @@
                     android:focusableInTouchMode="true"
                     android:hint="@string/search_ad"
                     android:imeOptions="actionSearch"
+                    android:text="@{viewModel.searchQuery}"
+                    android:inputType="textCapWords"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:layout_toStartOf="@id/clearIcon"
                     android:textColor="@color/primary_color"
                     android:textColorHint="@color/primary_color"
-                    android:textSize="@dimen/font_14"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="@dimen/font_14" />
+
+                <ImageView
+                    android:id="@+id/clearIcon"
+                    android:layout_width="wrap_content"
+                    android:onClick="@{() -> viewModel.onClearClicked()}"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="@{viewModel.isClearIconShown ? View.VISIBLE : View.GONE}"
+                    android:layout_alignParentEnd="true"
+                    app:tint="@color/primary_color"
+                    android:contentDescription="@null"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_close_24" />
 
             </RelativeLayout>
 
@@ -81,7 +95,7 @@
                 android:layout_width="@dimen/size_45"
                 android:layout_height="@dimen/size_45"
                 android:layout_marginStart="@dimen/margin_10"
-                android:background="@drawable/bg_search"
+                android:background="@drawable/bg_search_focused"
                 android:contentDescription="@null"
                 android:padding="13dp"
                 android:src="@drawable/ic_filter"
@@ -141,12 +155,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ads"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="@{viewModel.isPlaceholderItemsShown ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="3"

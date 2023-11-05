@@ -20,6 +20,8 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
     var navigator: Navigator? = null
 
     var isPlaceholderItemsShown: ObservableField<Boolean> = ObservableField(true)
+    var isClearIconShown: ObservableField<Boolean> = ObservableField(false)
+    var searchQuery: ObservableField<String> = ObservableField()
 
     private val _ads = MutableLiveData<IOStatus<AdList>>()
     val ads: LiveData<IOStatus<AdList>>
@@ -34,7 +36,7 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
     private fun getAds() = viewModelScope.launch {
         _ads.value = IOStatus.Loading(isLoading = true)
 
-        delay(3000L)
+        delay(2000L)
 
         try {
             _ads.value = IOStatus.Loading(isLoading = false)
@@ -65,11 +67,21 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
         }
     }
 
-    fun setVisibilityState(isLoading: Boolean) = viewModelScope.launch {
-        isPlaceholderItemsShown.set(isLoading)
+    fun setPlaceholderVisibility(isVisible: Boolean) = viewModelScope.launch {
+        isPlaceholderItemsShown.set(isVisible)
     }
 
+    fun setClearIconVisibility(isVisible: Boolean) = viewModelScope.launch {
+        isClearIconShown.set(isVisible)
+    }
 
+    fun updateSearchQuery(query: String) {
+        searchQuery.set(query)
+    }
+
+    fun onClearClicked() {
+        searchQuery.set("")
+    }
 
     interface Navigator {
         fun onAdClicked(adViewModel: AdViewModel)

@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     var statusBarHeight: Int = 0
+    var navigationBarHeight: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setStatusBarHeight()
+        setNavigationBarHeight()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -38,5 +40,15 @@ class MainActivity : AppCompatActivity() {
             resources.getDimensionPixelSize(idStatusBarHeight)
         else
             60
+    }
+
+    @SuppressLint("InternalInsetResource", "DiscouragedApi")
+    fun setNavigationBarHeight() {
+        val idNavigationBarHeight = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+
+        navigationBarHeight = if (idNavigationBarHeight > 0)
+            resources.getDimensionPixelSize(idNavigationBarHeight)
+        else
+            0
     }
 }
