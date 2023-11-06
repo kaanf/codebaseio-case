@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -78,7 +77,7 @@ class HomeFragment : Fragment(), HomeViewModel.Navigator {
                 }
 
                 is IOStatus.Failure -> {
-                    showError()
+                    viewModel.onError(isErrorVisible = true)
                 }
 
                 is IOStatus.Loading -> {
@@ -175,10 +174,6 @@ class HomeFragment : Fragment(), HomeViewModel.Navigator {
                 addItemDecoration(itemDecoration)
             }
         }
-    }
-
-    private fun showError() {
-        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAdClicked(adViewModel: AdViewModel) {

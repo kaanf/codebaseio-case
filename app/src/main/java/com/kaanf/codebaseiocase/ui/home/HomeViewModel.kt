@@ -11,8 +11,10 @@ import com.kaanf.codebaseiocase.domain.usecase.GetAdsUseCase
 import com.kaanf.codebaseiocase.ui.home.item.AdViewModel
 import com.kaanf.codebaseiocase.utils.IOStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +23,8 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
 
     var isPlaceholderItemsShown: ObservableField<Boolean> = ObservableField(true)
     var isClearIconShown: ObservableField<Boolean> = ObservableField(false)
+    var isErrorShown: ObservableField<Boolean> = ObservableField(false)
+
     var searchQuery: ObservableField<String> = ObservableField()
 
     private val _ads = MutableLiveData<IOStatus<AdList>>()
@@ -34,17 +38,20 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
     }
 
     private fun getAds() = viewModelScope.launch {
-        _ads.value = IOStatus.Loading(isLoading = true)
+        withContext(Dispatchers.IO) {
+            _ads.postValue(IOStatus.Loading(isLoading = true))
 
-        delay(2000L)
+            delay(3000L)
 
-        try {
-            _ads.value = IOStatus.Loading(isLoading = false)
+            try {
+                _ads.postValue(IOStatus.Loading(isLoading = false))
 
-            val result = getAdsUseCase.execute()
-            _ads.value = result
-        } catch (e: Exception) {
-            _ads.value = IOStatus.Failure(e)
+                getAdsUseCase.execute().also {
+                    _ads.postValue(it)
+                }
+            } catch (e: Exception) {
+                _ads.postValue(IOStatus.Failure(e))
+            }
         }
     }
 
@@ -67,11 +74,11 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
         }
     }
 
-    fun setPlaceholderVisibility(isVisible: Boolean) = viewModelScope.launch {
+    fun setPlaceholderVisibility(isVisible: Boolean) {
         isPlaceholderItemsShown.set(isVisible)
     }
 
-    fun setClearIconVisibility(isVisible: Boolean) = viewModelScope.launch {
+    fun setClearIconVisibility(isVisible: Boolean) {
         isClearIconShown.set(isVisible)
     }
 
@@ -81,6 +88,11 @@ class HomeViewModel @Inject constructor(private val getAdsUseCase: GetAdsUseCase
 
     fun onClearClicked() {
         searchQuery.set("")
+    }
+
+    fun onError(isErrorVisible: Boolean) {
+        isErrorShown.set(isErrorVisible)
+        isPlaceholderItemsShown.set(!isErrorVisible)
     }
 
     interface Navigator {

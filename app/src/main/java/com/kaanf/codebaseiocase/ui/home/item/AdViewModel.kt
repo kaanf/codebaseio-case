@@ -23,7 +23,6 @@ class AdViewModel(private val listener: Listener, val ad: Ad) : ViewModel(), Ser
     val grossAreaInDetail: ObservableField<String> = ObservableField()
     val netAreaInDetail: ObservableField<String> = ObservableField()
 
-    private var currentImagePosition: Int = 0
     var images: List<String> = listOf()
 
     val isBadgeShown: ObservableField<Boolean> = ObservableField(false)
@@ -50,38 +49,7 @@ class AdViewModel(private val listener: Listener, val ad: Ad) : ViewModel(), Ser
             isBadgeShown.set(true)
             badge.set(label)
         }
-
-        setCarouselImageCountText(currentImagePosition = currentImagePosition)
     }
-
-    fun onImageScrolled(increaseValue: Int) {
-        when (increaseValue) {
-            1 -> {
-                currentImagePosition = if (currentImagePosition < images.size)
-                    (currentImagePosition + 1)
-                else
-                    1
-            }
-
-            -1 -> {
-                currentImagePosition = if (currentImagePosition == 1)
-                    images.size
-                else
-                    currentImagePosition - 1
-            }
-        }
-
-        setCarouselImageCountText(currentImagePosition)
-    }
-
-    fun resetImagePosition() {
-        currentImagePosition = 0
-    }
-
-    private fun setCarouselImageCountText(currentImagePosition: Int) {
-        carouselImageCount.set("$currentImagePosition/${images.size}")
-    }
-
 
     fun onAdClicked() {
         listener.onAdClicked(ad = ad)

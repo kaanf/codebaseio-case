@@ -11,4 +11,5 @@
     <string name="all_features">Tüm Özellikler</string>
     <string name="review">İncele</string>
     <string name="description">Açıklama</string>
+    <string name="error_text">Veriler yüklenemedi.</string>
 </resources>

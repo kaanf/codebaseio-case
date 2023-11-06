@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
-import com.aemerse.slider.listener.CarouselOnScrollListener
 import com.aemerse.slider.model.CarouselItem
 import com.kaanf.codebaseiocase.databinding.FragmentDetailBinding
 import com.kaanf.codebaseiocase.ui.MainActivity
@@ -34,8 +32,6 @@ class DetailFragment : Fragment(), DetailViewModel.Navigator {
 
         args.adViewModel?.let { adViewModel ->
             binding?.adViewModel = adViewModel
-
-            adViewModel.resetImagePosition()
         }
 
         binding?.statusBarSpacer?.layoutParams?.let {
@@ -59,21 +55,6 @@ class DetailFragment : Fragment(), DetailViewModel.Navigator {
                 }
 
                 carousel.setData(carouselItems)
-
-                var currentPosition = 0
-                var currentCarouselItem = CarouselItem()
-
-                carousel.onScrollListener = object : CarouselOnScrollListener {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int, position: Int, carouselItem: CarouselItem?) {
-                        super.onScrollStateChanged(recyclerView, newState, position, carouselItem)
-                        if (newState == 0)
-                            if (currentCarouselItem != carouselItem)
-                                adViewModel.onImageScrolled(if (currentPosition < position || currentPosition == 0) 1 else -1)
-
-                        currentPosition = position
-                        currentCarouselItem = carouselItem ?: CarouselItem()
-                    }
-                }
             }
         }
     }

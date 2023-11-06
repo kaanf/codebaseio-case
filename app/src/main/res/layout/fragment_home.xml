@@ -126,8 +126,8 @@
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmerPlaceholder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_0"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:visibility="@{viewModel.isPlaceholderItemsShown ? View.VISIBLE : View.GONE}"
@@ -166,6 +166,36 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_list" />
+
+            <LinearLayout
+                android:id="@+id/connectionErrorRoot"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_0"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.isErrorShown ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/size_60"
+                    android:layout_height="@dimen/size_60"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_no_signal"
+                    app:tint="@color/primary_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_color"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/error_text"
+                    android:textSize="@dimen/font_16" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

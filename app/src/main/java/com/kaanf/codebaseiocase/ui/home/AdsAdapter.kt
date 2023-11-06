@@ -71,8 +71,8 @@ class AdsAdapter @Inject constructor() : RecyclerView.Adapter<AdsAdapter.AdsView
             @SuppressLint("NotifyDataSetChanged")
             @Suppress("UNCHECKED_CAST")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                adSearchResults = results?.values as ArrayList<AdViewModel>
-                notifyDataSetChanged()
+                    adSearchResults = (results?.values as List<AdViewModel>).toMutableList()
+                    notifyDataSetChanged()
             }
         }
     }

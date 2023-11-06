@@ -62,8 +62,7 @@
             android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="@id/arrowBack"
             app:layout_constraintEnd_toStartOf="@id/favorite"
-            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer"
-            app:tint="@color/black" />
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
 
         <ImageView
             android:id="@+id/favorite"
@@ -75,8 +74,7 @@
             android:src="@drawable/ic_heart"
             app:layout_constraintBottom_toBottomOf="@id/arrowBack"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer"
-            app:tint="@color/black" />
+            app:layout_constraintTop_toBottomOf="@id/statusBarSpacer" />
 
         <LinearLayout
             android:layout_width="wrap_content"

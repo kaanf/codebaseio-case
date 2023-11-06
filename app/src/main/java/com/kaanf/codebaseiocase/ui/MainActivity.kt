@@ -33,17 +33,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("InternalInsetResource", "DiscouragedApi")
-    fun setStatusBarHeight() {
+    private fun setStatusBarHeight() {
         val idStatusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
 
         statusBarHeight = if (idStatusBarHeight > 0)
-            resources.getDimensionPixelSize(idStatusBarHeight)
+            resources.getDimensionPixelSize(idStatusBarHeight) + 10
         else
             60
     }
 
     @SuppressLint("InternalInsetResource", "DiscouragedApi")
-    fun setNavigationBarHeight() {
+    private fun setNavigationBarHeight() {
         val idNavigationBarHeight = resources.getIdentifier("navigation_bar_height", "dimen", "android")
 
         navigationBarHeight = if (idNavigationBarHeight > 0)
