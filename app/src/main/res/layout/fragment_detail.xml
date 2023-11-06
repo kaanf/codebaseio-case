@@ -99,10 +99,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_10"
                 android:fontFamily="@font/inter_regular"
-                android:text="@{adViewModel.carouselImageCount}"
+                android:text="@string/detail_carousel_image_count"
                 android:textColor="@color/white"
-                android:textSize="@dimen/font_14"
-                tools:text="1/20" />
+                android:textSize="@dimen/font_14" />
 
         </LinearLayout>
 
