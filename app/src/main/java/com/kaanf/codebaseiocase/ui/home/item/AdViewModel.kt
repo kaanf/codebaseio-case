@@ -17,7 +17,6 @@ class AdViewModel(private val listener: Listener, val ad: Ad) : ViewModel(), Ser
     val date: ObservableField<String> = ObservableField()
     val badge: ObservableField<String> = ObservableField()
     val description: ObservableField<String> = ObservableField()
-    val carouselImageCount: ObservableField<String> = ObservableField()
 
     val roomCountInDetail: ObservableField<String> = ObservableField()
     val grossAreaInDetail: ObservableField<String> = ObservableField()

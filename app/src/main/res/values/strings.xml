@@ -11,5 +11,6 @@
     <string name="all_features">Tüm Özellikler</string>
     <string name="review">İncele</string>
     <string name="description">Açıklama</string>
+    <string name="detail_carousel_image_count">1/3</string>
     <string name="error_text">Veriler yüklenemedi.</string>
 </resources>
